@@ -1,0 +1,60 @@
+<div class="container">
+    <h4 class="card-header">SignUp</h4>
+    <div class="card-body">
+        <form [formGroup]='signupForm' (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <input type="text" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.name.errors }"
+                    formControlName='name' placeholder="Name">
+                <div *ngIf="submitted && f.name.errors" class="invalid-feedback" class="alert alert-danger">
+                    <div *ngIf="f.name.errors.required">
+                        First name is required*
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="email" class="form-control" formControlName='email' id='email' placeholder="Email Address"
+                    required="required" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+                <div *ngIf="submitted && f.email.errors" class="alert alert-danger">
+                    <div *ngIf="f.email.errors.required">
+                        Email address is required*
+                    </div>
+                    <div *ngIf="f.email.errors.pattern">
+                        Please enter valid email address*
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="password" class="form-control" placeholder="Password" required="required"
+                    [ngClass]="{ 'is-invalid': submitted && f.password.errors }" formControlName='password'>
+                <div *ngIf="submitted && f.password.errors" class="alert alert-danger">
+                    <div *ngIf="f.password.errors.required">
+                        Password is required*
+                    </div>
+                    <div *ngIf="f.password.errors.pattern">
+                        Password must be 1 uppercase , 1 lowercase & minimum 6 characters*
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary p-20">
+                    Sign Up
+                </button> &nbsp; &nbsp; &nbsp;
+                <button type="reset" class="btn">
+                    Reset
+                </button>
+
+            </div>
+        </form>
+        <div class="form-group">
+            <button type="submit" (click)="signUpWithGoogle()" class="btn btn-primary btn-block clearfix">
+                Sign Up With Google
+            </button>
+        </div>
+        <div>
+            Already signup click here for login <a routerLink="../login" class="btn btn-link">Login </a>
+        </div>
+    </div>
+</div>

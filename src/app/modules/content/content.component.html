@@ -1,0 +1,68 @@
+<div class="container" style="margin-top: 25px;">
+  <div style="float: right; margin-bottom: 20px;">
+    <button class="btn btn-primary" [routerLink]="['/category']">Back</button>
+    <button class="btn btn-primary" (click)="openContentModel(template)">Add Incident</button>
+  </div>
+  <h3><b>Incident List</b></h3>
+  <div class="form-group">
+    <input type="text" class="form-control" placeholder="Search here" [(ngModel)]="content">
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">No.</th>
+        <th scope="col">Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let content of contents | filter:content; let i = index">
+        <th scope="row">{{i + 1}}</th>
+        <td>{{content.title}}</td>
+        <td>{{content.description}}</td>
+        <td>
+          <img src="{{content.image}}" alt="Thumbnail">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<!--Add/Update Content Modal-->
+<ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Content</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="closeModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]='contentForm'>
+      <div class="form-group">
+        <input type="text" class="form-control" formControlName='title' placeholder="Title"
+          [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+        <div *ngIf="submitted && f.title.errors" class="alert alert-danger">
+          <div *ngIf="f.title.errors.required">
+            Title is required*
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" formControlName='description' placeholder="Description"
+          [ngClass]="{ 'is-invalid': submitted && f.description.errors }">
+        <div *ngIf="submitted && f.description.errors" class="alert alert-danger">
+          <div *ngIf="f.description.errors.required">
+            Description is required*
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <input type='file' id="image" accept="image/*" (change)="handleFileInputData($event)" />
+      </div>
+      <button type="button" class="btn btn-primary" (click)='addContent()'>Add</button>
+    </form>
+  </div>
+</ng-template>
